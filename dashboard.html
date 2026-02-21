@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #43e97b, #38f9d7);
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        .btn-group {
+            margin-bottom: 20px;
+        }
+
+        .top-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .top-btn:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .submit-btn {
+            padding: 10px;
+            margin-top: 10px;
+            background: #43e97b;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Admin Dashboard</h2>
+
+    <!-- Toggle Buttons -->
+    <div class="btn-group">
+        <button class="top-btn" onclick="showDoctor()">Add Doctor</button>
+        <button class="top-btn" onclick="showReceptionist()">Add Receptionist</button>
+    </div>
+
+    <!-- Doctor Card -->
+    <div class="card" id="doctorCard">
+        <h3>Add Doctor</h3>
+
+        <input id="name" placeholder="Name">
+        <input id="age" placeholder="Age">
+        <input id="gender" placeholder="Gender">
+        <input id="specialization" placeholder="Specialization">
+        <input id="contact" placeholder="Contact">
+        <input id="username" placeholder="Username">
+        <input id="password" placeholder="Password">
+
+        <button class="submit-btn" onclick="addDoctor()">Add Doctor</button>
+    </div>
+
+    <!-- Receptionist Card -->
+    <div class="card" id="receptionCard">
+        <h3>Add Receptionist</h3>
+
+        <input id="r_name" placeholder="Name">
+        <input id="r_age" placeholder="Age">
+        <input id="r_gender" placeholder="Gender">
+        <input id="r_email" placeholder="Email">
+        <input id="r_contact" placeholder="Contact">
+        <input id="r_username" placeholder="Username">
+        <input id="r_password" placeholder="Password">
+
+        <button class="submit-btn" onclick="addReceptionist()">Add Receptionist</button>
+    </div>
+
+    <script>
+        function showDoctor() {
+            document.getElementById("doctorCard").style.display = "block";
+            document.getElementById("receptionCard").style.display = "none";
+        }
+
+        function showReceptionist() {
+            document.getElementById("doctorCard").style.display = "none";
+            document.getElementById("receptionCard").style.display = "block";
+        }
+
+        async function addDoctor() {
+            const data = {
+                name: document.getElementById("name").value,
+                age: document.getElementById("age").value,
+                gender: document.getElementById("gender").value,
+                specialization: document.getElementById("specialization").value,
+                contact: document.getElementById("contact").value,
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            };
+
+            const res = await fetch("http://localhost:5000/admin/add-doctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                alert("Doctor added successfully");
+            } else {
+                alert("Error adding doctor");
+            }
+        }
+
+        async function addReceptionist() {
+            const data = {
+                name: document.getElementById("r_name").value,
+                age: document.getElementById("r_age").value,
+                gender: document.getElementById("r_gender").value,
+                email: document.getElementById("r_email").value,
+                contact: document.getElementById("r_contact").value,
+                username: document.getElementById("r_username").value,
+                password: document.getElementById("r_password").value
+            };
+
+            const res = await fetch("http://localhost:5000/admin/add-receptionist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                alert("Receptionist added successfully");
+            } else {
+                alert("Error adding receptionist");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
